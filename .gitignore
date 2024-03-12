@@ -1,5 +1,5 @@
 # Исключение папки и всех ее содержимого
 .venv/
-.build/
-.fonts/
-
+build/
+fonts/
+__pycache__/
