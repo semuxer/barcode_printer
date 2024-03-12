@@ -1,0 +1,6 @@
+# Определение типов файлов
+*.txt text
+*.jpg binary
+*.py diff=python
+*.json diff=json
+*.ttf binary
