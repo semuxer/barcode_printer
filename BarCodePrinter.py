@@ -1,16 +1,17 @@
 import wx
+from os import path
 from multiprocessing import freeze_support
 
 from myconfig import Config
 from printer import Printes
 from serverv2 import BGServer
-from defaults import *
+from defaults import bundle_dir
 
 
 class MyWindow(wx.Frame):
     def __init__(self, parent, title):
         super(MyWindow, self).__init__(parent, title=title, size=(640, 580))
-        self.SetIcon(wx.Icon('icons\\Icon19.ico', wx.BITMAP_TYPE_ICO))
+        self.SetIcon(wx.Icon(path.join(bundle_dir, 'Icon19.ico'), wx.BITMAP_TYPE_ICO))
 
         self.myserv = BGServer()
 

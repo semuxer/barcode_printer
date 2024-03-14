@@ -1,8 +1,9 @@
 import os
-import barcode
+from os import path
 from barcode import Code128
 from PIL import Image, ImageDraw, ImageFont
 
+from defaults import bundle_dir
 
 class Barcode128():
     def __init__(self, data, text="", bcsize=(320, 200), font_num="NotoSansMono_ExtraCondensed-Regular.ttf", font_num_size=1.0, font_txt="Roboto-Medium.ttf", font_txt_size=1.0, borders=20, saved=False):
@@ -36,14 +37,14 @@ class Barcode128():
         self.barcodeimg = Image.new('1', bcsize, color=1)
         draw = ImageDraw.Draw(self.barcodeimg)
         # НОМЕР
-        font = ImageFont.truetype(font_num, bcsize[0]//8*font_num_size)
+        font = ImageFont.truetype(path.join(bundle_dir, font_num), bcsize[0]//8*font_num_size)
         textbbox = draw.textbbox((0, 0), data, font=font)
         text_position = ((bcsize[0] - textbbox[2]) //
                          2, bcsize[1] // 2)
         text_color = 0  # Черный цвет текста (0)
         draw.text(text_position, data, fill=text_color, font=font)
         # НАЗВА
-        font = ImageFont.truetype(font_txt, bcsize[0]//16*font_txt_size)
+        font = ImageFont.truetype(path.join(bundle_dir, font_txt), bcsize[0]//16*font_txt_size)
         textbbox = draw.textbbox((0, 0), text, font=font)
         text_position = (
             (bcsize[0] - textbbox[2]) // 2, bcsize[1] - textbbox[3] - borders)
@@ -56,14 +57,14 @@ class Barcode128():
     def save(self, filename=None):
         if filename:
             self.filename = filename
-        self.barcodeimg.save(self.filename)
+        self.barcodeimg.save(path.join(bundle_dir, self.filename))
 
         # Удаляем деструктором класса
     def __del__(self):
         if self.saved:
             return
         try:
-            os.remove(self.filename)
+            os.remove(path.join(bundle_dir, self.filename))
         except FileNotFoundError:
             print('Файл відсутній')
             pass

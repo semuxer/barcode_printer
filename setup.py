@@ -32,6 +32,7 @@ setup(
         "build_exe": {
             "include_files": dlls+additional_files,
             "includes": ["wx"],   # Указание на включение библиотеки wxPython
+            'packages': ['wx'],
         }
     },
     executables=executables

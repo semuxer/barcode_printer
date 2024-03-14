@@ -1,10 +1,13 @@
+from os import path
 from PIL import Image, ImageWin
 import win32print
 import win32ui
 
+from defaults import bundle_dir
+
 def print_tiff_file(file_path, printer_name):
     # Открываем файл TIFF
-    image = Image.open(file_path)
+    image = Image.open(path.join(bundle_dir, file_path))
     if image.mode != "1":
         image = image.convert("1")
 
@@ -15,7 +18,7 @@ def print_tiff_file(file_path, printer_name):
     printer_dc.CreatePrinterDC(printer_name)
 
     # Устанавливаем параметры печати
-    printer_dc.StartDoc('Print TIFF File')
+    printer_dc.StartDoc(path.basename(file_path))
     printer_dc.StartPage()
 
     # Отображаем изображение на контексте устройства принтера
